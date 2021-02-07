@@ -68,7 +68,7 @@ public class Robot extends TimedRobot
         //     new Pose2d(3, 0, Rotation2d.fromDegrees(0)),
         //     m_drive.getTrajectoryConfig());
 
-        for(int i = 0; i < 4; i++)
+        for(int i = 0; i < 4; i++) //TODO use m_trajectory.length
         {
             String trajectoryJSON = "output/Path 0" + (i+1) + ".wpilib.json";
             try
@@ -99,7 +99,7 @@ public class Robot extends TimedRobot
 
     @Override
     public void autonomousPeriodic() 
-    {
+    { //TODO have a start-of-path-segment switch and move what's in the "else" block to here plus start.. = false
         // Update odometry.
         m_drive.updateOdometry();
         System.out.println(m_drive);
@@ -117,8 +117,8 @@ public class Robot extends TimedRobot
             m_drive.drive(refChassisSpeeds.vxMetersPerSecond, refChassisSpeeds.omegaRadiansPerSecond);
         } 
         else 
-        {
-            m_drive.drive(0, 0);
+        { //TODO set start ... = true and move these 3 lines to beginning
+            m_drive.drive(0, 0); // make a method to stop all motors.  For the SparkMax they prefer you use their stopMotor().  Talon might not have that so make our own.
             m_path++;
             m_timer.reset();
         }
